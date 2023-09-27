@@ -1,0 +1,130 @@
+DROP TABLE IF EXISTS `bus_details`;
+
+CREATE TABLE `bus_details` (
+  `bus_number` int NOT NULL,
+  `arrival_busstop` varchar(255) NOT NULL,
+  `arrival_date` varchar(255) NOT NULL,
+  `arrival_time` varchar(255) NOT NULL,
+  `available_seats` int DEFAULT NULL,
+  `bus_vendor` varchar(255) NOT NULL,
+  `cost` double NOT NULL,
+  `departure_busstop` varchar(255) NOT NULL,
+  `departure_date` varchar(255) NOT NULL,
+  `departure_time` varchar(255) NOT NULL,
+  PRIMARY KEY (`bus_number`)
+)
+
+-- Table structure for table `admins`
+--
+
+DROP TABLE IF EXISTS `admins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `admins` (
+  `admin_id` int NOT NULL,
+  `admin_name` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) 
+
+/*!40000 ALTER TABLE `admins` DISABLE KEYS */;
+INSERT INTO `admins` VALUES (107,'admin123','admin@123'),
+(291,'admin123','admin@123'),(334,'admin123','admin@123'),(352,'admin123','admin@123'),(369,'admin123','admin@123'),(380,'admin123','admin@123'),(590,'admin123','admin@123'),(591,'admin123','admin@123'),(600,'admin123','admin@123'),(660,'admin123','admin@123'),(903,'admin123','admin@123'),(942,'admin123','admin@123'),(947,'admin123','admin@123'),(956,'admin123','admin@123'),(958,'admin123','admin@123');
+/*!40000 ALTER TABLE `admins` ENABLE KEYS */;
+
+
+-- Table structure for table `booking_details`
+--
+
+DROP TABLE IF EXISTS `booking_details`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `booking_details` (
+  `booking_id` int NOT NULL,
+  `booking_date` varchar(255) DEFAULT NULL,
+  `booking_time` varchar(255) DEFAULT NULL,
+  `bus_number` int DEFAULT NULL,
+  `owner_id` int DEFAULT NULL,
+  `total_cost` double DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`booking_id`),
+  KEY `FKk5ttm2pj6nbpwgyhqyf9rt055` (`user_id`),
+  CONSTRAINT `FKk5ttm2pj6nbpwgyhqyf9rt055` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booking_details`
+--
+
+LOCK TABLES `booking_details` WRITE;
+/*!40000 ALTER TABLE `booking_details` DISABLE KEYS */;
+INSERT INTO `booking_details` VALUES (4921,'2023-09-24','14:48',3670,486,1000,486),(5398,'2023-09-22','13:46',3670,891,1000,891),(7806,'2023-09-25','11:00',3670,295,1000,295),(8282,'2023-09-26','18:40',8617,279,2000,NULL),(8370,'2023-09-21','14:54',8174,295,2500,295),(9055,'2023-09-25','11:49',4193,891,2500,891);
+
+
+
+-- Table structure for table `booking_details_passengers`
+--
+
+DROP TABLE IF EXISTS `booking_details_passengers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `booking_details_passengers` (
+  `booking_details_booking_id` int NOT NULL,
+  `passengers_passenger_id` int NOT NULL,
+  UNIQUE KEY `UK_r1e60hp79tovn40nubnq1y2wi` (`passengers_passenger_id`),
+  KEY `FKp79rcenxmalp57gfdfl46mc1o` (`booking_details_booking_id`),
+  CONSTRAINT `FKhv6gmalblxsm7b2fko82u3ct8` FOREIGN KEY (`passengers_passenger_id`) REFERENCES `passengers` (`passenger_id`),
+  CONSTRAINT `FKp79rcenxmalp57gfdfl46mc1o` FOREIGN KEY (`booking_details_booking_id`) REFERENCES `booking_details` (`booking_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `booking_details_passengers`
+--
+
+LOCK TABLES `booking_details_passengers` WRITE;
+/*!40000 ALTER TABLE `booking_details_passengers` DISABLE KEYS */;
+INSERT INTO `booking_details_passengers` VALUES (4921,6),(5398,5),(7806,9),(8282,13),(8370,1),(9055,10);
+
+DROP TABLE IF EXISTS `passengers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `passengers` (
+  `passenger_id` int NOT NULL,
+  `age` int DEFAULT NULL,
+  `luggage` double DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`passenger_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `passengers`
+--
+
+LOCK TABLES `passengers` WRITE;
+/*!40000 ALTER TABLE `passengers` DISABLE KEYS */;
+INSERT INTO `passengers` VALUES (1,25,12,'mahesh'),(5,23,12,'k'),(6,11,1,'mahesh'),(9,23,10,'mahesh'),(10,20,10,'mahesh'),(13,23,10,'Manmadha');
+
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `user_id` int NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` bigint NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (178,'bisojeet@gmail.com','Biswo@123',8237684564,'Biswojeet Bahera'),(279,'karthik@gmail.com','karthik@123',9501256789,'karthik'),(295,'mahi@gmail.com','9949126048',9676108747,'mahesh'),(397,'kommu@gmail.com','12345678',9675437865,'kommu'),(486,'kommu@gmail.com','9949126048',9676108747,'mahesh'),(551,'mahesh1@gmail.com','99491269',9968123469,'mahesh1'),(784,'mahi1@gmail.com','12345678',9949126048,'mahesh'),(891,'user@gmail.com','9949126048',9123486793,'user');
